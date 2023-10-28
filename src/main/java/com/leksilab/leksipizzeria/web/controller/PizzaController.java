@@ -33,6 +33,16 @@ public class PizzaController {
         return ResponseEntity.ok(this.pizzaService.getAvailable());
     }
 
+    @GetMapping("/with/{ingredient}")
+    public ResponseEntity<List<PizzaEntity>> getWith(@PathVariable String ingredient) {
+        return ResponseEntity.ok(this.pizzaService.getWith(ingredient));
+    }
+
+    @GetMapping("/without/{ingredient}")
+    public ResponseEntity<List<PizzaEntity>> getWithout(@PathVariable String ingredient) {
+        return ResponseEntity.ok(this.pizzaService.getWithout(ingredient));
+    }
+
     @GetMapping("/name/{name}")
     public ResponseEntity<PizzaEntity> get(@PathVariable String name) {
         return ResponseEntity.ok(this.pizzaService.getByName(name));
