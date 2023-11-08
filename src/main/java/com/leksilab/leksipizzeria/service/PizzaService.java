@@ -1,10 +1,12 @@
 package com.leksilab.leksipizzeria.service;
 
 import com.leksilab.leksipizzeria.persistence.entity.PizzaEntity;
+import com.leksilab.leksipizzeria.persistence.repository.PizzaPagSortRepository;
 import com.leksilab.leksipizzeria.persistence.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +14,19 @@ import java.util.List;
 @Service
 public class PizzaService {
     private final PizzaRepository pizzaRepository;
+    private final PizzaPagSortRepository pizzaPagSortRepository;
 
     @Autowired
-    public PizzaService(PizzaRepository pizzaRepository) {
+    public PizzaService(PizzaRepository pizzaRepository, PizzaPagSortRepository pizzaPagSortRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.pizzaPagSortRepository = pizzaPagSortRepository;
     }
 
-    public List<PizzaEntity> getAll() {
-        return this.pizzaRepository.findAll();
+    //public List<PizzaEntity> getAll() {
+    public Page<PizzaEntity> getAll(int page, int elements) {
+        Pageable pageRequest = PageRequest.of(page, elements);
+//        return this.pizzaRepository.findAll();
+        return this.pizzaPagSortRepository.findAll(pageRequest);
     }
 
     public List<PizzaEntity> getAvailable() {
