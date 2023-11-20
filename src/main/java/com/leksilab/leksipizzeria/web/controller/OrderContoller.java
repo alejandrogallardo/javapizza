@@ -1,6 +1,7 @@
 package com.leksilab.leksipizzeria.web.controller;
 
 import com.leksilab.leksipizzeria.persistence.entity.OrderEntity;
+import com.leksilab.leksipizzeria.persistence.projection.OrderSummary;
 import com.leksilab.leksipizzeria.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +40,10 @@ public class OrderContoller {
     @GetMapping("/customer/{id}")
     public ResponseEntity<List<OrderEntity>> getCustomerOrders(@PathVariable String id) {
         return ResponseEntity.ok(this.orderService.getCustomerOrders(id));
+    }
+
+    @GetMapping("/summary/{id}")
+    public ResponseEntity<OrderSummary> getSummary(@PathVariable int id) {
+        return ResponseEntity.ok(this.orderService.getSummary(id));
     }
 }
