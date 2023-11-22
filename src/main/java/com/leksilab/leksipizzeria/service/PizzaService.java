@@ -3,12 +3,14 @@ package com.leksilab.leksipizzeria.service;
 import com.leksilab.leksipizzeria.persistence.entity.PizzaEntity;
 import com.leksilab.leksipizzeria.persistence.repository.PizzaPagSortRepository;
 import com.leksilab.leksipizzeria.persistence.repository.PizzaRepository;
+import com.leksilab.leksipizzeria.service.dto.UpdatePizzaPriceDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -68,6 +70,11 @@ public class PizzaService {
 
     public void delete(int idPizza) {
         this.pizzaRepository.deleteById(idPizza);
+    }
+
+    @Transactional
+    public void updatePrice(UpdatePizzaPriceDto dto) {
+        this.pizzaRepository.updatePrice(dto);
     }
 
     public List<PizzaEntity> getCheapest(double price) {
