@@ -4,6 +4,7 @@ import com.leksilab.leksipizzeria.persistence.entity.PizzaEntity;
 import com.leksilab.leksipizzeria.persistence.repository.PizzaPagSortRepository;
 import com.leksilab.leksipizzeria.persistence.repository.PizzaRepository;
 import com.leksilab.leksipizzeria.service.dto.UpdatePizzaPriceDto;
+import com.leksilab.leksipizzeria.service.exception.EmailApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -72,9 +73,15 @@ public class PizzaService {
         this.pizzaRepository.deleteById(idPizza);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = EmailApiException.class)
     public void updatePrice(UpdatePizzaPriceDto dto) {
         this.pizzaRepository.updatePrice(dto);
+        this.sendEmail();
+        //https://www.baeldung.com/spring-transactional-propagation-isolation
+    }
+
+    private void sendEmail() {
+        throw new EmailApiException();
     }
 
     public List<PizzaEntity> getCheapest(double price) {
