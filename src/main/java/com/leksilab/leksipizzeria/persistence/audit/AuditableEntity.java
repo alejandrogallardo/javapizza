@@ -1,4 +1,4 @@
-package com.leksilab.leksipizzeria.persistence.entity;
+package com.leksilab.leksipizzeria.persistence.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
